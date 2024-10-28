@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات المستخدم</title>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        label, input {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ced4da;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: block;
+        }
+        .username {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>إعدادات المستخدم</h2>
+
+<img id="profileImageDisplay" class="profile-image" src="" alt="صورة البروفايل" hidden>
+<div class="username" id="usernameDisplay"></div>
+
+<label for="profileImage">تغيير صورة البروفايل:</label>
+<input type="file" id="profileImage" accept="image/*" onchange="displayImage(event)">
+
+<label for="email">تعديل الإيميل:</label>
+<input type="email" id="email" placeholder="أدخل إيميلك">
+
+<label for="password">تعديل كلمة المرور:</label>
+<input type="password" id="newPassword" placeholder="أدخل كلمة المرور الجديدة">
+
+<button onclick="saveSettings()">حفظ التغييرات</button>
+
+<script>
+    // تحميل معلومات المستخدم عند تحميل الصفحة
+    window.onload = function() {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+        if (loggedUser) {
+            const user = users.find(u => u.email === loggedUser.email);
+            if (user) {
+                document.getElementById('usernameDisplay').innerText = user.username; // عرض اسم المستخدم
+                document.getElementById('profileImageDisplay').src = user.profileImage || ''; // عرض صورة البروفايل
+                document.getElementById('email').value = user.email;
+                document.getElementById('profileImageDisplay').hidden = false; // إظهار الصورة
+            }
+        }
+    };
+
+    function displayImage(event) {
+        const profileImage = document.getElementById('profileImageDisplay');
+        profileImage.src = URL.createObjectURL(event.target.files[0]);
+        profileImage.hidden = false; // إظهار الصورة
+    }
+
+    function saveSettings() {
+        const email = document.getElementById('email').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const profileImage = document.getElementById('profileImage').files[0];
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+
+        if (loggedUser) {
+            const userIndex = users.findIndex(u => u.email === loggedUser.email);
+            if (userIndex !== -1) {
+                if (email) {
+                    users[userIndex].email = email;
+                }
+                if (newPassword) {
+                    users[userIndex].password = newPassword;
+                }
+                if (profileImage) {
+                    const reader = new FileReader();
+                    reader.onloadend = function() {
+                        users[userIndex].profileImage = reader.result;
+                        localStorage.setItem('users', JSON.stringify(users));
+                        alert('تم حفظ التغييرات بنجاح!');
+                    };
+                    reader.readAsDataURL(profileImage);
+                } else {
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert('تم حفظ التغييرات بنجاح!');
+                }
+            }
+        } else {
+            alert('لا يوجد مستخدم مسجل.');
+        }
+    }
+</script>
+
+</body>
+</html>>>

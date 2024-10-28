@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دروس اللغة العربية - منال صلاح</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .lesson {
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .lesson h2 {
+            color: #0056b3;
+        }
+        .resources, .comments {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background-color: #0056b3;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .lesson:hover {
+            background-color: #e9f7fe;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>دروس اللغة العربية</h1>
+    <h2>منال صلاح</h2>
+</header>
+
+<div class="lesson">
+    <h2>درس 1: [عنوان الدرس]</h2>
+    <p><strong>تاريخ:</strong> [تاريخ الدرس]</p>
+    <p><strong>مدة:</strong> [مدة الدرس]</p>
+    <p><strong>ملخص:</strong> [فقرة قصيرة عن محتوى الدرس]</p>
+    <p><strong>أهداف الدرس:</strong> [أهداف التعلم]</p>
+    
+    <h3>فيديو الدرس:</h3>
+    <video width="560" height="315" controls> 
+        <source src="" type="video/mp4"> 
+    </video>
+</div>
+
+<div class="lesson">
+    <h2>درس 2: [عنوان الدرس]</h2>
+    <p><strong>تاريخ:</strong> [تاريخ الدرس]</p>
+    <p><strong>مدة:</strong> [مدة الدرس]</p>
+    <p><strong>ملخص:</strong> [فقرة قصيرة عن محتوى الدرس]</p>
+    <p><strong>أهداف الدرس:</strong> [أهداف التعلم]</p>
+    
+    <h3>فيديو الدرس:</h3>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/" 
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+            gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<div class="resources">
+    <h3>موارد إضافية</h3>
+    <ul>
+    </ul>
+</div>
+
+<div class="comments">
+    
+    <form>
+    
+    
+    </form>
+</div>
+
+<footer>
+    <button>دروس سابقة</button>
+    <button>دروس تالية</button>
+</footer>
+
+<script>
+    // وظيفة لإظهار رسالة عند إرسال التعليق
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // منع إعادة تحميل الصفحة
+        alert('تم إرسال تعليقك بنجاح!');
+    });
+</script>
+
+</body>
+</html>>

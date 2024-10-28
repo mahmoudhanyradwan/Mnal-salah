@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل مستخدم جديد</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f9f9f9;
+            text-align: right;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 28px;
+            text-shadow: 2px 2px 4px #aaa;
+            color: #28a745;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px #aaa;
+            border-radius: 5px;
+        }
+        .show-password {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ تسجيل مستخدم جديد ✨</h1>
+        <form id="registerForm">
+            <label for="fullname">الاسم الكامل:</label>
+            <input type="text" id="fullname" required>
+            <div id="fullname-error" class="error-message">يرجى إدخال الاسم الكامل.</div>
+
+            <label for="username">اسم المستخدم:</label>
+            <input type="text" id="username" required>
+            <div id="username-error" class="error-message">يرجى إدخال اسم المستخدم.</div>
+
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" required>
+            <div id="email-error" class="error-message">يرجى إدخال بريد إلكتروني صالح.</div>
+
+            <label for="profileImage">صورة البروفايل:</label>
+            <input type="file" id="profileImage" accept="image/*" required>
+
+            <label for="password">كلمة المرور:</label>
+            <input type="password" id="password" required>
+            <span class="show-password" onclick="togglePassword()">👁 عرض</span>
+            <div id="password-error" class="error-message">كلمة المرور يجب أن تكون 8 أحرف على الأقل وتحتوي على أحرف كبيرة وصغيرة وأرقام.</div>
+
+            <label for="confirm-password">تأكيد كلمة المرور:</label>
+            <input type="password" id="confirm-password" required>
+            <div id="confirm-password-error" class="error-message">كلمات المرور لا تتطابق.</div>
+
+            <label>
+                <input type="checkbox" id="terms" required> أوافق على الشروط والأحكام
+            </label>
+            <div id="terms-error" class="error-message">يجب الموافقة على الشروط والأحكام.</div>
+
+            <button type="submit">🌟 تسجيل</button>
+        </form>
+        <p>لديك حساب؟ <a href="login.html">تسجيل الدخول</a></p>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const fullname = document.getElementById('fullname').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const terms = document.getElementById('terms').checked;
+            const profileImage = document.getElementById('profileImage').files[0];
+
+            let isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+            // Validation
+            if (fullname === '') {
+                document.getElementById('fullname-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (username === '') {
+                document.getElementById('username-error').style.display = 'block';
+                isValid = false;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById('email-error').style.display = 'block';
+                isValid = false;
+            }
+
+            const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            if (!passwordPattern.test(password)) {
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-password-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!terms) {
+                document.getElementById('terms-error').style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    const user = { fullname, username, email, password, profileImage: reader.result };
+                    const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+                    existingUsers.push(user);
+                    localStorage.setItem('users', JSON.stringify(existingUsers));
+                    alert('تم التسجيل بنجاح!');
+                    window.location.href = 'home.html';
+                };
+                if (profileImage) {
+                    reader.readAsDataURL(profileImage); // قراءة ملف الصورة
+                } else {
+                    alert('يرجى اختيار صورة للبروفايل.');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

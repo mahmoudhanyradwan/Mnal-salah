@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج الاختبار</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .quiz-container {
+            background: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .options {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        .result {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #e0f7fa;
+            border: 2px solid #00796b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            font-size: 20px;
+            color: #00796b;
+        }
+        .correct-answers {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0ffe0;
+            border: 1px solid #c8e6c9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>اختبار اللغة العربية</h1>
+    
+    <form id="quiz-form">
+        <div class="question">
+            <p>1. ما هو عاصمة مصر؟</p>
+            <div class="options">
+                <input type="radio" id="cairo" name="question1" value="cairo">
+                <label for="cairo">القاهرة</label><br>
+                <input type="radio" id="alex" name="question1" value="alex">
+                <label for="alex">الإسكندرية</label><br>
+                <input type="radio" id="giza" name="question1" value="giza">
+                <label for="giza">الجيزة</label><br>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. ما هو أكبر محيط في العالم؟</p>
+            <div class="options">
+                <input type="radio" id="atlantic" name="question2" value="atlantic">
+                <label for="atlantic">المحيط الأطلسي</label><br>
+                <input type="radio" id="pacific" name="question2" value="pacific">
+                <label for="pacific">المحيط الهادئ</label><br>
+                <input type="radio" id="indian" name="question2" value="indian">
+                <label for="indian">المحيط الهندي</label><br>
+            </div>
+        </div>
+
+        <button type="submit">تقديم الاختبار</button>
+    </form>
+
+    <div id="result" class="result" style="display: none;"></div>
+    <div id="correct-answers" class="correct-answers" style="display: none;"></div>
+</div>
+
+<script>
+    document.getElementById('quiz-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // منع إعادة تحميل الصفحة
+        
+        let score = 0; // لاحتساب النقاط
+        const totalQuestions = 2; // عدد الأسئلة
+        const correctAnswers = [];
+
+        // تقييم الإجابات
+        if (document.querySelector('input[name="question1"]:checked')?.value === 'cairo') {
+            score++;
+        } else {
+            correctAnswers.push('1. عاصمة مصر هي: القاهرة');
+        }
+        
+        if (document.querySelector('input[name="question2"]:checked')?.value === 'pacific') {
+            score++;
+        } else {
+            correctAnswers.push('2. أكبر محيط في العالم هو: المحيط الهادئ');
+        }
+
+        // عرض النتيجة
+        const resultDiv = document.getElementById('result');
+        resultDiv.textContent = `نتيجتك: ${score} من ${totalQuestions} سؤال`;
+        resultDiv.style.display = 'flex';
+
+        // عرض الإجابات الصحيحة
+        const correctAnswersDiv = document.getElementById('correct-answers');
+        correctAnswersDiv.innerHTML = `<strong>الإجابات الصحيحة:</strong><br>${correctAnswers.join('<br>')}`;
+        correctAnswersDiv.style.display = correctAnswers.length > 0 ? 'block' : 'none';
+    });
+</script>
+
+</body>
+</html>

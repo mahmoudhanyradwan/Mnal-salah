@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f9f9f9;
+            text-align: right;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 28px;
+            text-shadow: 2px 2px 4px #aaa;
+            color: #007bff;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px #aaa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔑 تسجيل الدخول 🔑</h1>
+        <form id="loginForm">
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" id="email" required>
+
+            <label for="password">كلمة المرور:</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">🔒 تسجيل الدخول</button>
+        </form>
+        <p>ليس لديك حساب؟ <a href="register.html">إنشاء حساب جديد</a></p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem('loggedUser', JSON.stringify({ email })); // حفظ المستخدم المتصل
+                alert('تم تسجيل الدخول بنجاح!');
+                window.location.href = 'home.html';
+            } else {
+                alert('البريد الإلكتروني أو كلمة المرور غير صحيحة.');
+            }
+        });
+    </script>
+</body>
+</html>>
